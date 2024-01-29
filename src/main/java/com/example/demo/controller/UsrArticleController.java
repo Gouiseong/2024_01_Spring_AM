@@ -1,9 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,37 +11,10 @@ import com.example.demo.vo.Article;
 
 @Controller
 public class UsrArticleController {
+	int lastArticleId;
+	List<Article> articles;
 
-	private int lastArticleId = 0;
-	private String title;
-	private String body;
-	private Article article;
-	private List<Article> articles = new ArrayList<>();
-
-	@RequestMapping("/usr/home/doModify")
-	@ResponseBody
-	public Object doModify(int id) {
-		if (articles.get(id - 1).getId() == id) {
-			String title = "안녕";
-			String body = "하세요";
-			articles.get(id - 1).setTitle(title);
-			articles.get(id - 1).setBody(body);
-			return id + "번 글이 수정되었습니다.";
-		}
-		return id + "번 글은 없습니다.";
-
-	}
-
-	@RequestMapping("/usr/home/doDelete")
-	@ResponseBody
-	public Object doDelete(int id) {
-		if (articles.get(id - 1).getId() == id - 1) {
-			articles.remove(id - 1);
-			return id + "번 글이 삭제되었습니다.";
-		}
-		return id + "번 글은 없습니다.";
-	}
-
+	// 생성자
 	public UsrArticleController() {
 		lastArticleId = 0;
 		articles = new ArrayList<>();
@@ -51,6 +22,7 @@ public class UsrArticleController {
 		makeTestData();
 	}
 
+	// 서비스 메서드
 	private void makeTestData() {
 		for (int i = 1; i <= 10; i++) {
 			String title = "제목" + i;
@@ -69,21 +41,46 @@ public class UsrArticleController {
 		return article;
 	}
 
-	@RequestMapping("/usr/home/getArticles")
+	private void deleteArticle(int id) {
+		Article article = getArticle(id);
+		articles.remove(article);
+	}
+
+	private Article getArticle(int id) {
+		for (Article article : articles) {
+			if (article.getId() == id) {
+				return article;
+			}
+		}
+		return null;
+	}
+
+	// 액션 메서드
+	@RequestMapping("/usr/article/doDelete")
+	@ResponseBody
+	public String doDelete(int id) {
+
+		Article article = getArticle(id);
+
+		if (article == null) {
+			return id + "번 글은 존재하지 않습니다.";
+		}
+
+		deleteArticle(id);
+
+		return id + "번 글이 삭제 되었습니다";
+	}
+
+	@RequestMapping("/usr/article/doAdd")
+	@ResponseBody
+	public Article doAdd(String title, String body) {
+		Article article = writeArticle(title, body);
+		return article;
+	}
+
+	@RequestMapping("/usr/article/getArticles")
 	@ResponseBody
 	public List<Article> getArticles() {
-
 		return articles;
 	}
-
-	@RequestMapping("/usr/home/doAdd")
-	@ResponseBody
-	public String doAdd(String title, String body) {
-		int id = lastArticleId + 1;
-		Article article = new Article(id, title, body);
-		articles.add(article);
-		lastArticleId++;
-		return id + "번 글이 등록되었습니다.";
-	}
-
 }
