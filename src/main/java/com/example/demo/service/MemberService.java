@@ -47,4 +47,21 @@ public class MemberService {
 		return memberRepository.getMember(id);
 	}
 
+	public int login(String loginId, String loginPw) {
+		Member existsMember = getMemberByLoginId(loginId);
+
+		existsMember = getMemberByLoginIdAndLoginPw(loginId, loginPw);
+
+		if (existsMember != null) {
+			return -1;
+		}
+
+		return 0;
+	}
+
+	private Member getMemberByLoginIdAndLoginPw(String loginId, String loginPw) {
+
+		return memberRepository.getMemberByLoginIdAndLoginPw(loginId, loginPw);
+	}
+
 }

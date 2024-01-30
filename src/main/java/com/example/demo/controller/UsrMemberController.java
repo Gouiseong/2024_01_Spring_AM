@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.demo.service.MemberService;
 import com.example.demo.util.Ut;
 import com.example.demo.vo.Member;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UsrMemberController {
@@ -52,4 +54,25 @@ public class UsrMemberController {
 
 		return member;
 	}
+
+	@RequestMapping("/usr/member/doLogin")
+	@ResponseBody
+	public String doLogin(String loginId, String loginPw) {
+		if (Ut.isNullOrEmpty(loginId)) {
+			return "아이디를 입력해주세요";
+		}
+		if (Ut.isNullOrEmpty(loginPw)) {
+			return "비밀번호를 입력해주세요";
+		}
+		int id = memberService.login(loginId, loginPw);
+		if (id == -1) {
+			return "로그인되었습니다.";
+		}
+		if (id == 0) {
+			return "아이디 또는 비밀번호가 맞지 않습니다";
+		}
+
+		return "아이디 또는 비밀번호가 맞지 않습니다.";
+	}
+
 }
