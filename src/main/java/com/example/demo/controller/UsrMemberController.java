@@ -17,6 +17,26 @@ public class UsrMemberController {
 
 	@Autowired
 	private MemberService memberService;
+	private HttpSession httpSession;
+
+	@RequestMapping("/usr/member/doLogout")
+	@ResponseBody
+	public ResultData<Member> doLogout(HttpSession httpSession) {
+		boolean isLogined = true;
+
+		httpSession.getAttribute("loginedMemberId");
+		if (httpSession.getAttribute("loginedMemberId") == null) {
+			isLogined = false;
+		}
+
+		if (!isLogined) {
+			return ResultData.from("F-A", "이미 로그아웃 상태입니다");
+		}
+
+		httpSession.setAttribute("loginedMemberId", null);
+
+		return ResultData.from("S-A", "로그아웃 되었습니다.");
+	}
 
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
