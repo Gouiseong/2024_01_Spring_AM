@@ -20,7 +20,7 @@ public interface ArticleRepository {
 			memberId = #{memberId},
 			title = #{title}, `body` = #{body}
 			""")
-	public void writeArticle(String memberNickname, String title, String body);
+	public void writeArticle(int loginedMemberId, String title, String body);
 
 	@Select("SELECT LAST_INSERT_ID()")
 	public int getLastInsertId();

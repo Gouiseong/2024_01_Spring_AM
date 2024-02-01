@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.demo.service.ArticleService;
 import com.example.demo.util.Ut;
 import com.example.demo.vo.Article;
-import com.example.demo.vo.Member;
 import com.example.demo.vo.ResultData;
 
 import jakarta.servlet.http.HttpSession;
@@ -28,21 +27,14 @@ public class UsrArticleController {
 
 	// 액션 메서드
 
-	@RequestMapping("/usr/article/getArticle")
-	@ResponseBody
-	public ResultData<Article> getArticleAction(int id) {
-		Article article = articleService.getArticle(id);
-
-		if (article == null) {
-			return ResultData.from("F-1", Ut.f("%d번 게시물은 존재하지 않습니다", id));
-		}
-
-		return ResultData.from("S-1", Ut.f("%d번 게시물입니다.", id), "article", article);
-	}
-
 	@RequestMapping("/usr/article/detail")
-	public String showDetail(Model model, int id, HttpSession httpSession) {
+	public String showDetail(Model model, int id) {
 		Article article = articleService.getArticle(id);
+
+		/*
+		 * if (article == null) { return ResultData.from("F-1",
+		 * Ut.f("%d번 게시물은 존재하지 않습니다", id)); }
+		 */
 
 		model.addAttribute("article", article);
 
@@ -64,11 +56,10 @@ public class UsrArticleController {
 
 		boolean isLogined = false;
 		int loginedMemberId = 0;
-		String memberNickname = null;
+
 		if (httpSession.getAttribute("loginedMemberId") != null) {
 			isLogined = true;
 			loginedMemberId = (int) httpSession.getAttribute("loginedMemberId");
-			memberNickname = (String) httpSession.getAttribute("memberNickname");
 		}
 
 		if (isLogined == false) {
@@ -82,7 +73,7 @@ public class UsrArticleController {
 			return ResultData.from("F-2", "내용을 입력해주세요");
 		}
 
-		ResultData<Integer> writeArticleRd = articleService.writeArticle(memberNickname, title, body);
+		ResultData<Integer> writeArticleRd = articleService.writeArticle(loginedMemberId, title, body);
 
 		int id = (int) writeArticleRd.getData1();
 
