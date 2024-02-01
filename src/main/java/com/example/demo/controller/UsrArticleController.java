@@ -4,12 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.service.ArticleService;
 import com.example.demo.util.Ut;
 import com.example.demo.vo.Article;
+import com.example.demo.vo.Member;
 import com.example.demo.vo.ResultData;
 
 import jakarta.servlet.http.HttpSession;
@@ -38,11 +40,22 @@ public class UsrArticleController {
 		return ResultData.from("S-1", Ut.f("%d번 게시물입니다.", id), "article", article);
 	}
 
-	@RequestMapping("/usr/article/getArticles")
-	@ResponseBody
-	public ResultData<List<Article>> getArticles() {
+	@RequestMapping("/usr/article/detail")
+	public String showDetail(Model model, int id, HttpSession httpSession) {
+		Article article = articleService.getArticle(id);
+
+		model.addAttribute("article", article);
+
+		return "usr/article/detail";
+	}
+
+	@RequestMapping("/usr/article/list")
+	public String showList(Model model) {
 		List<Article> articles = articleService.getArticles();
-		return ResultData.from("S-1", "Article List", "List<Article>", articles);
+
+		model.addAttribute("articles", articles);
+
+		return "usr/article/list";
 	}
 
 	@RequestMapping("/usr/article/doWrite")
@@ -51,10 +64,11 @@ public class UsrArticleController {
 
 		boolean isLogined = false;
 		int loginedMemberId = 0;
-
+		String memberNickname = null;
 		if (httpSession.getAttribute("loginedMemberId") != null) {
 			isLogined = true;
 			loginedMemberId = (int) httpSession.getAttribute("loginedMemberId");
+			memberNickname = (String) httpSession.getAttribute("memberNickname");
 		}
 
 		if (isLogined == false) {
@@ -68,7 +82,7 @@ public class UsrArticleController {
 			return ResultData.from("F-2", "내용을 입력해주세요");
 		}
 
-		ResultData<Integer> writeArticleRd = articleService.writeArticle(loginedMemberId, title, body);
+		ResultData<Integer> writeArticleRd = articleService.writeArticle(memberNickname, title, body);
 
 		int id = (int) writeArticleRd.getData1();
 

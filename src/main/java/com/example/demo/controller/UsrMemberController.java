@@ -69,7 +69,7 @@ public class UsrMemberController {
 		}
 
 		httpSession.setAttribute("loginedMemberId", member.getId());
-
+		httpSession.setAttribute("memberNickname", member.getNickname());
 		return ResultData.from("S-1", Ut.f("%s님 환영합니다", member.getNickname()));
 	}
 

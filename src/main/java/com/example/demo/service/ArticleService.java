@@ -21,8 +21,8 @@ public class ArticleService {
 	}
 
 	// 서비스 메서드
-	public ResultData<Integer> writeArticle(int memberId, String title, String body) {
-		articleRepository.writeArticle(memberId, title, body);
+	public ResultData<Integer> writeArticle(String memberNickname, String title, String body) {
+		articleRepository.writeArticle(memberNickname, title, body);
 
 		int id = articleRepository.getLastInsertId();
 
@@ -54,4 +54,4 @@ public class ArticleService {
 		return ResultData.from("S-1", Ut.f("%d번 글을 수정했습니다", article.getId()));
 	}
 
-}
+} 
