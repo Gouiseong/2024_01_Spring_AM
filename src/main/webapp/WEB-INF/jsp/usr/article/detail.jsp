@@ -22,7 +22,13 @@
 		<li>수정 날짜 : ${article.updateDate.substring(0,10) }</li>
 		<li>제목 : ${article.title }</li>
 		<li>내용 : ${article.body }</li>
-		<li>작성자 : ${article.nickname }</li>
+		<li>작성자 : ${article.memberId }</li>
+		<div>
+			<a class="hover:underline" href="../article/modify?id=" ${article.id }>수정</a>
+		</div>
+		<div>
+			<a class="hover:underline" href="../article/delete?id="${article.id }">삭제</a>
+		</div>
 	</ul>
 
 
