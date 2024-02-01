@@ -21,8 +21,33 @@ public class ArticleService {
 	}
 
 	// 서비스 메서드
-	public ResultData<Integer> writeArticle(int loginedMemberId, String title, String body) {
-		articleRepository.writeArticle(loginedMemberId, title, body);
+	public Article getForPrintArticle(int loginedMemberId, int id) {
+		Article article = articleRepository.getForPrintArticle(id);
+
+		updateForPrintData(loginedMemberId, article);
+
+		return article;
+	}
+
+	private void updateForPrintData(int loginedMemberId, Article article) {
+		if (article == null) {
+			return;
+		}
+		ResultData userCanModifyRd = userCanModify(loginedMemberId, article);
+		article.setUserCanModify(userCanModifyRd.isSuccess());
+	}
+
+	public ResultData userCanModify(int loginedMemberId, Article article) {
+
+		if (article.getMemberId() != loginedMemberId) {
+			return ResultData.from("F-2", Ut.f("%d번 글에 대한 권한이 없습니다", article.getId()));
+		}
+
+		return ResultData.from("S-1", Ut.f("%d번 글을 수정했습니다", article.getId()));
+	}
+
+	public ResultData<Integer> writeArticle(int memberId, String title, String body) {
+		articleRepository.writeArticle(memberId, title, body);
 
 		int id = articleRepository.getLastInsertId();
 
@@ -45,13 +70,4 @@ public class ArticleService {
 		return articleRepository.getArticles();
 	}
 
-	public ResultData loginedMemberCanModify(int loginedMemberId, Article article) {
-
-		if (article.getMemberId() != loginedMemberId) {
-			return ResultData.from("F-2", Ut.f("%d번 글에 대한 권한이 없습니다", article.getId()));
-		}
-
-		return ResultData.from("S-1", Ut.f("%d번 글을 수정했습니다", article.getId()));
-	}
-
-} 
+}

@@ -2,9 +2,11 @@ package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.demo.service.ArticleService;
 import com.example.demo.service.MemberService;
 import com.example.demo.util.Ut;
 import com.example.demo.vo.Member;
@@ -17,6 +19,13 @@ public class UsrMemberController {
 
 	@Autowired
 	private MemberService memberService;
+	private ArticleService articleservice;
+
+	@RequestMapping("/usr/member/login")
+
+	public String doLogin(Model model) {
+		return "usr/member/login";
+	}
 
 	@RequestMapping("/usr/member/doLogout")
 	@ResponseBody
@@ -69,7 +78,7 @@ public class UsrMemberController {
 		}
 
 		httpSession.setAttribute("loginedMemberId", member.getId());
-		httpSession.setAttribute("memberNickname", member.getNickname());
+
 		return ResultData.from("S-1", Ut.f("%s님 환영합니다", member.getNickname()));
 	}
 
