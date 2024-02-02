@@ -18,9 +18,15 @@ public class UsrMemberController {
 	@Autowired
 	private MemberService memberService;
 
+	@RequestMapping("/usr/member/logout")
+	public String showLogout(HttpSession httpSession) {
+
+		return "usr/member/logout";
+	}
+
 	@RequestMapping("/usr/member/doLogout")
 	@ResponseBody
-	public ResultData doLogout(HttpSession httpSession) {
+	public String doLogout(HttpSession httpSession) {
 
 		boolean isLogined = false;
 
@@ -29,12 +35,12 @@ public class UsrMemberController {
 		}
 
 		if (isLogined == false) {
-			return ResultData.from("F-A", "이미 로그아웃 상태입니다");
+			return Ut.jsHistoryBack("F-A", "이미 로그아웃 상태입니다");
 		}
 
 		httpSession.removeAttribute("loginedMemberId");
 
-		return ResultData.from("S-1", Ut.f("로그아웃 되었습니다"));
+		return Ut.jsReplace("S-1", "로그아웃 되었습니다.", "/");
 	}
 
 	@RequestMapping("/usr/member/login")
