@@ -6,47 +6,52 @@
 
 <section class="mt-8 text-xl px-4">
 	<div class="mx-auto">
-
-		<form action="../article/doModify?id=${article.id }">
-
-			<a href="../article/modify?id=${article.id }">안녕</a>
-			<table class="login-box table-box-1" border="1">
+		<form action="../article/doModify" method="POST">
+			<input type="hidden" name="id" value="${article.id }" />
+			<table class="modify-box table-box-1" border="1">
 				<tbody>
 					<tr>
-						<th>원래 제목</th>
-						<td>${article.title }</td>
+						<th>번호</th>
+						<td>${article.id }</td>
 					</tr>
 					<tr>
-						<th>원래 내용</th>
-						<td>${article.body }</td>
+						<th>작성날짜</th>
+						<td>${article.regDate }</td>
 					</tr>
 					<tr>
-						<th>새 제목</th>
-						<td>
-							<input autocomplete="off" type="text" placeholder="제목을 입력해주세요." name="title" />
-						</td>
+						<th>수정날짜</th>
+						<td>${article.updateDate }</td>
 					</tr>
 					<tr>
-						<th>새 내용</th>
-						<td>
-							<input autocomplete="off" type="text" placeholder="내용을 입력해주세요." name="body" />
-						</td>
+						<th>작성자</th>
+						<td>${article.extra__writer }</td>
+					</tr>
+					<tr>
+						<th>제목</th>
+						<td><input autocomplete="off" type="text" placeholder="제목을 입력해주세요" name="title" value="${article.title }" /></td>
+					</tr>
+					<tr>
+						<th>내용</th>
+						<td><input autocomplete="off" type="text" placeholder="내용을 입력해주세요" name="body" value="${article.body }" /></td>
 					</tr>
 					<tr>
 						<th></th>
-						<td>
-
-							<input type="submit" value="수정" />
-
-						</td>
+						<td><input type="submit" value="수정" /></td>
 					</tr>
 				</tbody>
 			</table>
 		</form>
-
 		<div class="btns">
 			<button class="hover:underline" type="button" onclick="history.back();">뒤로가기</button>
+			<c:if test="${article.userCanModify }">
+				<a href="../article/modify?id=${article.id }">수정</a>
+			</c:if>
+			<c:if test="${article.userCanDelete }">
+				<a onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;" href="../article/doDelete?id=${article.id }">삭제</a>
+			</c:if>
+
 		</div>
+
 	</div>
 </section>
 
