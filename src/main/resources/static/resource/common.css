@@ -78,3 +78,8 @@ header>div>ul>li>ul {
 header>div>ul>li:hover>ul {
 	display: block;
 }
+
+.find-article >div{
+	display:inline-block;
+	border: 1px solid black;
+}
