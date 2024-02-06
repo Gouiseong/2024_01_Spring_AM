@@ -36,6 +36,7 @@ public class UsrArticleController {
 	}
 
 	// 액션 메서드
+	
 
 	@RequestMapping("/usr/article/list")
 	public String showList(HttpServletRequest req, Model model, @RequestParam(defaultValue = "1") int boardId,
@@ -66,7 +67,7 @@ public class UsrArticleController {
 		model.addAttribute("pagesCount", pagesCount);
 		model.addAttribute("articlesCount", articlesCount);
 		model.addAttribute("articles", articles);
-
+		
 		return "usr/article/list";
 	}
 

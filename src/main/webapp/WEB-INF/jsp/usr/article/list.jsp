@@ -28,7 +28,9 @@
 					<tr class="hover">
 						<td>${article.id }</td>
 						<td>${article.regDate.substring(0,10) }</td>
-						<td><a href="detail?id=${article.id }">${article.title }</a></td>
+						<td>
+							<a href="detail?id=${article.id }">${article.title }</a>
+						</td>
 						<td>${article.extra__writer }</td>
 					</tr>
 				</c:forEach>
@@ -57,15 +59,28 @@
 
 	</div>
 
-	<!-- 	원래 페이징 -->
+	<%-- <!-- 	원래 페이징 -->
 	<div class="pagination flex justify-center mt-3">
 		<div class="btn-group">
 			<c:forEach begin="1" end="${pagesCount }" var="i">
 				<a class="btn btn-sm ${param.page == i ? 'btn-active' : '' }" href="?page=${i }&boardId=${param.boardId}">${i }</a>
 			</c:forEach>
 		</div>
-	</div>
+	</div> --%>
 </section>
+<form action="../article/list?title=${title }">
+	<select class="select select-bordered w-10px max-w-xs">
+		<option>제목</option>
+		<option>내용</option>
+		<option>작성자</option>
+	</select>
+	<div>
+		<input class="findBytitle" type="text" name="title" />
+	</div>
+	<div>
+		<input class="btn" type="submit" value="검색" />
+	</div>
+</form>
 
 
 

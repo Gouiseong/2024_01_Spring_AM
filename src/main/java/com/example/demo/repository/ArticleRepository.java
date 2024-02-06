@@ -111,4 +111,20 @@ public interface ArticleRepository {
 			""")
 	public List<Article> getForPrintArticles(int boardId, int limitFrom, int limitTake);
 
+	
+	@Select("""
+			SELECT A.*, M.nickname AS extra__writer
+			FROM article AS A
+			INNER JOIN `member` AS M
+			ON A.memberId = M.id
+			WHERE 
+			<if test="title != null">
+				title=#{title}
+			<if test="body != null">
+				`body`=#{body}
+			<if test="nickname != null">
+				nickname=#{nickname}		
+			ORDER BY A.id DESC
+			""")
+	public List<Article> getArticlesBytitlebodynickname(String title,String body,String nickname);
 }
