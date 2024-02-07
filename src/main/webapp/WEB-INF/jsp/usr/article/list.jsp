@@ -68,14 +68,14 @@
 		</div>
 	</div> --%>
 </section>
-<form action="../article/list?title=${title }">
+<form action="../article/list?title=${title }" method="get">
 	<select class="select select-bordered w-10px max-w-xs">
-		<option>제목</option>
-		<option>내용</option>
-		<option>작성자</option>
+		<option value="title">제목</option>
+		<option value="body">내용</option>
+		<option value="extra__writer">작성자</option>
 	</select>
 	<div>
-		<input class="findBytitle" type="text" name="title" />
+		<input type="text" name="keyword" value />
 	</div>
 	<div>
 		<input class="btn" type="submit" value="검색" />
