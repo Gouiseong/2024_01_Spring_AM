@@ -28,15 +28,14 @@
 					<tr class="hover">
 						<td>${article.id }</td>
 						<td>${article.regDate.substring(0,10) }</td>
-						<td>
-							<a href="detail?id=${article.id }">${article.title }</a>
-						</td>
+						<td><a href="detail?id=${article.id }">${article.title }</a></td>
 						<td>${article.extra__writer }</td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
 	</div>
+	
 	<!-- 	동적 페이징 -->
 	<div class="pagination flex justify-center mt-3">
 		<c:set var="paginationLen" value="3" />
@@ -59,28 +58,15 @@
 
 	</div>
 
-	<%-- <!-- 	원래 페이징 -->
+	<!-- 	원래 페이징 -->
 	<div class="pagination flex justify-center mt-3">
 		<div class="btn-group">
 			<c:forEach begin="1" end="${pagesCount }" var="i">
 				<a class="btn btn-sm ${param.page == i ? 'btn-active' : '' }" href="?page=${i }&boardId=${param.boardId}">${i }</a>
 			</c:forEach>
 		</div>
-	</div> --%>
+	</div>
 </section>
-<form action="../article/list?title=${title }" method="get">
-	<select class="select select-bordered w-10px max-w-xs">
-		<option value="title">제목</option>
-		<option value="body">내용</option>
-		<option value="extra__writer">작성자</option>
-	</select>
-	<div>
-		<input type="text" name="keyword" value />
-	</div>
-	<div>
-		<input class="btn" type="submit" value="검색" />
-	</div>
-</form>
 
 
 

@@ -79,8 +79,3 @@ header>div>ul>li:hover>ul {
 	display: block;
 }
 
-.findBytitle {
-	display: inline-block;
-	border: 1px solid black;
-	padding: 5px;
-}
