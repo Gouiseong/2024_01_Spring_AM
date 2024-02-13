@@ -154,4 +154,8 @@ public interface ArticleRepository {
 	public List<Article> getForPrintArticles(int boardId, int limitFrom, int limitTake, String searchKeywordTypeCode,
 			String searchKeyword);
 
+	public int increaseLikeCount(int id);
+
+	public Object getArticleLikeCount(int id);
+
 }
