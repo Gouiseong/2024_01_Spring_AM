@@ -26,6 +26,7 @@ public class Rq {
 	private HttpServletRequest req;
 	private HttpServletResponse resp;
 
+	// 생성자
 	public Rq(HttpServletRequest req, HttpServletResponse resp) {
 		this.req = req;
 		this.resp = resp;
