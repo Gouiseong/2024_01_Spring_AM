@@ -84,7 +84,6 @@ public class UsrArticleController {
 		Rq rq = (Rq) req.getAttribute("rq");
 
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
-
 		ResultData usersReactionRd = reactionPointService.usersReaction(rq.getLoginedMemberId(), "article", id);
 
 		if (usersReactionRd.isSuccess()) {
@@ -92,8 +91,6 @@ public class UsrArticleController {
 		}
 
 		model.addAttribute("article", article);
-		
-		//좋아요 눌렀는지 싫어요 눌렀는지 확인
 		model.addAttribute("isAlreadyAddGoodRp",
 				reactionPointService.isAlreadyAddGoodRp(rq.getLoginedMemberId(), id, "article"));
 		model.addAttribute("isAlreadyAddBadRp",
