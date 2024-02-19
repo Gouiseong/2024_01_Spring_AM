@@ -98,11 +98,10 @@ public class UsrArticleController {
 		List<Reply> replies = replyService.getForPrintReplies(rq.getLoginedMemberId(), "article", id);
 
 		int repliesCount = replies.size();
-	
-		
+
 		model.addAttribute("article", article);
 		model.addAttribute("replies", replies);
-		
+
 		model.addAttribute("repliesCount", repliesCount);
 		model.addAttribute("isAlreadyAddGoodRp",
 				reactionPointService.isAlreadyAddGoodRp(rq.getLoginedMemberId(), id, "article"));
