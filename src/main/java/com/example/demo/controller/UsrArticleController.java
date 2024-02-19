@@ -97,7 +97,7 @@ public class UsrArticleController {
 
 		List<Reply> replies = replyService.getForPrintReplies(rq.getLoginedMemberId(), "article", id);
 
-		Reply reply;
+		
 		int repliesCount = replies.size();
 
 		
