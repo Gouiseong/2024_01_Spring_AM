@@ -97,8 +97,10 @@ public class UsrArticleController {
 
 		List<Reply> replies = replyService.getForPrintReplies(rq.getLoginedMemberId(), "article", id);
 
+		Reply reply;
 		int repliesCount = replies.size();
 
+		
 		model.addAttribute("article", article);
 		model.addAttribute("replies", replies);
 		model.addAttribute("repliesCount", repliesCount);
