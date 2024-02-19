@@ -306,6 +306,8 @@
 					<th>작성자</th>
 					<th>좋아요</th>
 					<th>싫어요</th>
+			
+
 				</tr>
 			</thead>
 			<tbody>
@@ -318,6 +320,21 @@
 						<td>${reply.extra__writer }</td>
 						<td>${reply.goodReactionPoint }</td>
 						<td>${reply.badReactionPoint }</td>
+
+						<div class="btns mt-5">
+
+							<td>
+								<c:if test="${article.userCanModify }">
+									<a class="btn btn-outline" href="../reply/modify?id=${reply.id }">수정</a>
+								</c:if>
+							</td>
+							<td>
+								<c:if test="${article.userCanDelete }">
+									<a class="btn btn-outline" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;"
+										href="../reply/doDelete?id=${reply.id }">삭제</a>
+								</c:if>
+							</td>
+						</div>
 					</tr>
 				</c:forEach>
 			</tbody>
