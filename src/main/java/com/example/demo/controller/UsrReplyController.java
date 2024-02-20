@@ -57,5 +57,41 @@ public class UsrReplyController {
 		return Ut.jsReplace(writeReplyRd.getResultCode(), writeReplyRd.getMsg(), "../article/detail?id=" + relId);
 
 	}
+	
+//	@RequestMapping("/usr/reply/modify")
+//	public String showModify(HttpServletRequest req, Model model, int id) {
+//		Rq rq = (Rq) req.getAttribute("rq");
+//
+//		Article article =replyService.getForPrintReply(rq.getLoginedMemberId(), id);
+//
+//		if (article == null) {
+//			return Ut.jsHistoryBack("F-1", Ut.f("%d번 글은 존재하지 않습니다", id));
+//		}
+//
+//		model.addAttribute("reply", reply);
+//
+//		return "usr/reply/modify";
+//	}
+//
+//	@RequestMapping("/usr/reply/doModify")
+//	@ResponseBody
+//	public String doModify(HttpServletRequest req, int id, String title, String body) {
+//		Rq rq = (Rq) req.getAttribute("rq");
+//
+//		Article article = articleService.getArticle(id);
+//
+//		if (article == null) {
+//			return Ut.jsHistoryBack("F-1", Ut.f("%d번 글은 존재하지 않습니다", id));
+//		}
+//
+//		ResultData loginedMemberCanModifyRd = articleService.userCanModify(rq.getLoginedMemberId(), article);
+//
+//		if (loginedMemberCanModifyRd.isSuccess()) {
+//			articleService.modifyArticle(id, title, body);
+//		}
+//
+//		return Ut.jsReplace(loginedMemberCanModifyRd.getResultCode(), loginedMemberCanModifyRd.getMsg(),
+//				"../article/detail?id=" + id);
+//	}
 
 }
