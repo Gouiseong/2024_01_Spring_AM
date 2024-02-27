@@ -3,9 +3,9 @@ package com.example.demo.repository;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.example.demo.vo.Member;
-import com.example.demo.vo.ResultData;
 
 @Mapper
 public interface MemberRepository {
@@ -15,13 +15,6 @@ public interface MemberRepository {
 			WHERE loginId = #{loginId}
 			""")
 	public Member getMemberByLoginId(String loginId);
-
-	@Select("""
-			SELECT *
-			FROM `member`
-			WHERE loginId=#{loginId} and loginPw = #{loginPw}
-			""")
-	public Member getMemberByLoginIdAndLoginPw(String loginId, String loginPw);
 
 	@Select("""
 			SELECT *
@@ -51,11 +44,31 @@ public interface MemberRepository {
 	@Select("SELECT * FROM `member` WHERE id = #{id}")
 	public Member getMember(int id);
 
-	@Select("""
-			SELECT `name`
-			FROM `member`
-			WHERE loginId=#{loginId} and loginPw = #{loginPw}
+	@Update("""
+			<script>
+			UPDATE `member`
+			<set>
+				<if test="loginPw != null">
+					loginPw = #{loginPw},
+				</if>
+				<if test="name != null">
+					name = #{name},
+				</if>
+				<if test="nickname != null">
+					nickname = #{nickname},
+				</if>
+				<if test="cellphoneNum != null">
+					cellphoneNum = #{cellphoneNum},
+				</if>
+				<if test="email != null">
+					email = #{email},
+				</if>
+				updateDate= NOW()
+			</set>
+			WHERE id = #{loginedMemberId}
+			</script>
 			""")
-	public String getName();
+	public void modify(int loginedMemberId, String loginPw, String name, String nickname, String cellphoneNum,
+			String email);
 
 }
