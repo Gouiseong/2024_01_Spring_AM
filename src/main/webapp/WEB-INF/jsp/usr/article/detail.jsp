@@ -220,21 +220,21 @@ function doModifyReply(replyId) {
 	    var action = form.attr('action');
 	    console.log(action); // 디버깅을 위해 action을 콘솔에 출력
 	
-    $.post({
-    	url: '/usr/reply/doModify', // 수정된 URL
-        type: 'POST', // GET에서 POST로 변경
-        data: { id: replyId, body: text }, // 서버에 전송할 데이터
-        success: function(data) {
-        	$('#modify-form-'+replyId).hide();
-        	$('#reply-'+replyId).text(data);
-        	$('#reply-'+replyId).show();
-        	$('#save-btn-'+replyId).hide();
-        	$('#modify-btn-'+replyId).show();
-        },
-        error: function(xhr, status, error) {
-            alert('댓글 수정에 실패했습니다: ' + error);
-        }
-	})
+	    $.post({
+	    	url: '/usr/reply/doModify', // 수정된 URL
+	    	type: 'POST', // GET에서 POST로 변경
+	        data: { id: replyId, body: text }, // 서버에 전송할 데이터
+	        success: function(data) {
+	        	$('#modify-form-'+replyId).hide();
+	        	$('#reply-'+replyId).text(data);
+	        	$('#reply-'+replyId).show();
+	        	$('#save-btn-'+replyId).hide();
+	        	$('#modify-btn-'+replyId).show();
+	        },
+	        error: function(xhr, status, error) {
+	            alert('댓글 수정에 실패했습니다: ' + error);
+	        }
+		})
 }
 </script>
 
