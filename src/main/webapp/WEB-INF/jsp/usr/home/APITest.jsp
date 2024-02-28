@@ -26,6 +26,16 @@
 	
 	getData2();
 	
+	async function getData3() {
+		const API_KEY = 'ZgjRhTc3BeH1LoIIoEyv09%2BR33S0zgewRwrkShmFTR1WUUJheNxlSVnmECtQg2vSZGHsIfElEms2r6ngi%2FKi0w%3D%3D';
+		const url = 'https://apis.data.go.kr/5690000/sjParkingLotInformation1/sj_00000949?serviceKey=' + API_KEY + '&pageIndex=5&pageUnit=20';
+		const response = await fetch(url);
+		const data = await response.json();
+		console.log("data", data);
+	}
+	
+	getData3();
+	
 	
 </script>
 
