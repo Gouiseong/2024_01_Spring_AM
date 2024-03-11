@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <c:set var="pageTitle" value="ARTICLE DETAIL"></c:set>
 <%@ include file="../common/head.jspf"%>
+<%@ include file="../common/toastUiEditorLib.jspf"%>
 
 <!-- <iframe src="http://localhost:8081/usr/article/doIncreaseHitCountRd?id=372" frameborder="0"></iframe> -->
 
@@ -220,22 +222,23 @@ function doModifyReply(replyId) {
 	    var action = form.attr('action');
 	    console.log(action); // 디버깅을 위해 action을 콘솔에 출력
 	
-	    $.post({
-	    	url: '/usr/reply/doModify', // 수정된 URL
-	    	type: 'POST', // GET에서 POST로 변경
-	        data: { id: replyId, body: text }, // 서버에 전송할 데이터
-	        success: function(data) {
-	        	$('#modify-form-'+replyId).hide();
-	        	$('#reply-'+replyId).text(data);
-	        	$('#reply-'+replyId).show();
-	        	$('#save-btn-'+replyId).hide();
-	        	$('#modify-btn-'+replyId).show();
-	        },
-	        error: function(xhr, status, error) {
-	            alert('댓글 수정에 실패했습니다: ' + error);
-	        }
-		})
+    $.post({
+    	url: '/usr/reply/doModify', // 수정된 URL
+        type: 'POST', // GET에서 POST로 변경
+        data: { id: replyId, body: text }, // 서버에 전송할 데이터
+        success: function(data) {
+        	$('#modify-form-'+replyId).hide();
+        	$('#reply-'+replyId).text(data);
+        	$('#reply-'+replyId).show();
+        	$('#save-btn-'+replyId).hide();
+        	$('#modify-btn-'+replyId).show();
+        },
+        error: function(xhr, status, error) {
+            alert('댓글 수정에 실패했습니다: ' + error);
+        }
+	})
 }
+
 </script>
 
 
@@ -286,11 +289,15 @@ function doModifyReply(replyId) {
 					<th>제목</th>
 					<td>${article.title }</td>
 				</tr>
+
 				<tr>
 					<th>내용</th>
-					<td>${article.body }</td>
+					<td>
+						<div class="toast-ui-viewer">
+							<script type="text/x-template">${article.body}</script>
+						</div>
+					</td>
 				</tr>
-
 			</tbody>
 		</table>
 		<div class="btns mt-5">
@@ -316,8 +323,8 @@ function doModifyReply(replyId) {
 					<tr>
 						<th>내용</th>
 						<td>
-							<textarea class="input input-bordered input-primary w-full max-w-xs" autocomplete="off" type="text"
-								placeholder="내용을 입력해주세요" name="body"> </textarea>
+							<textarea class="input input-bordered input-primary w-full max-w-xs" autocomplete="off" placeholder="내용을 입력해주세요"
+								name="body"> </textarea>
 						</td>
 					</tr>
 					<tr>
@@ -392,6 +399,8 @@ function doModifyReply(replyId) {
 
 </section>
 
+<script>
 
+</script>
 
 <%@ include file="../common/foot.jspf"%>
